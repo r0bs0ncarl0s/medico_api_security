@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,12 @@ public class MedicoController {
     private MedicoRepository repository;
 
     @GetMapping("/{id}")
+    /* Outra maneira de restringir o acesso a determinadas funcionalidades, 
+     com base no perfil dos usuários, é com a utilização de um recurso do 
+     Spring Security conhecido como Method Security, que funciona com a 
+     utilização de anotações em métodos:
+      
+     @Secured("ROLE_ADMIN")*/
     public ResponseEntity detalhar(@PathVariable Long id) {
         var medico = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
