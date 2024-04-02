@@ -1,6 +1,6 @@
 package med.voll.api.infra.security;
 
-public interface CifradorDeSenha {
+public interface ICifradorDeSenha {
 
 	String cifrarSenha(String senha);
 

@@ -1,8 +1,10 @@
 package med.voll.api.infra.security;
 
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.stereotype.Component;
 
-public class CifradorDeSenhaBcrypt implements CifradorDeSenha{
+@Component
+public class CifradorDeSenhaBcrypt implements ICifradorDeSenha{
 
     public String cifrarSenha(String senha) {
 

@@ -14,6 +14,7 @@ import med.voll.api.domain.usuario.DadosCadastroUsuario;
 import med.voll.api.domain.usuario.DadosDetalhamentoUsuario;
 import med.voll.api.domain.usuario.Usuario;
 import med.voll.api.domain.usuario.UsuarioRepository;
+import med.voll.api.infra.security.ICifradorDeSenha;
 import med.voll.api.infra.security.CifradorDeSenhaBcrypt;
 
 @RestController
@@ -23,11 +24,13 @@ public class UsuarioController {
 	 @Autowired
 	 private UsuarioRepository repository;
 	 
+	 @Autowired
+	 private ICifradorDeSenha cifrador;
+	 
 	@PostMapping
 	@Transactional
 	public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroUsuario dados, UriComponentsBuilder uriBuilder) {
 		var usuario = new Usuario(dados);
-		var cifrador = new CifradorDeSenhaBcrypt();
 		usuario.setSenha(cifrador.cifrarSenha(usuario.getSenha()));
 		repository.save(usuario);
         var uri = uriBuilder.path("/usuarios/{id}").buildAndExpand(usuario.getId()).toUri();
